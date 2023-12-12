@@ -1,0 +1,99 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
+    
+  }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+header .nav_list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically in the center */
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 12px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+section {
+    padding: 2rem 0;
+}
+
+#hero {
+    background: url('img/king.jpg') center/cover no-repeat fixed; /* Fixed background */
+    text-align: center;
+    padding: 100px 0;
+    height: 38vh; /* Set height to viewport height */
+    position: relative;
+}
+
+
+#hero h2 {
+    color: #fff;
+    font-size: 2em;
+    z-index: 1;
+}
+
+#hero p {
+    color: #ffd700; /* Change the color of the paragraph to yellow */
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #333;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+}

@@ -1,0 +1,137 @@
+<!-- resources/views/lessons/index.blade.php -->
+
+@extends('layouts.app')
+<style>
+    .container1 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+        max-width: 1100px; /* Set your desired max-width */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+
+    .card img {
+        width: 100%;
+        height: 150px;
+    }
+
+    .card-body {
+        padding-top: 20px;
+        margin-left: 40px;
+    }
+
+    .card-title {
+        font-size: 1.0rem; /* Adjust the font size as needed */
+    }
+
+    .card-text {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        margin-left: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #searchInput {
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    #searchButton {
+        padding: 10px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+@section('content')
+    <input type="text" id="searchInput" placeholder="Search lessons" oninput="searchLessons()">
+    <button id="searchButton" onclick="clearSearch()">Clear</button>
+
+    <div class="container1">
+        @foreach($lessons as $lesson)
+            <div class="card" id="lesson_{{ $lesson->id }}">
+                <img src="{{ asset('storage/' . $lesson->image_path) }}" alt="{{ $lesson->title }}">
+                <div class="card-body">
+                    <h1 class="card-title">{{ $lesson->title }}</h1>
+                    <p class="card-text card-instructor">Instructor: {{ $lesson->instructor }}</p>
+                    <p class="card-text">Price: ${{ $lesson->price }}</p>
+                    @if($Payments->where('lesson_id', $lesson->id)->first() && $Payments->where('lesson_id', $lesson->id)->first()->payment_status === 'approved')
+                        <button class="btn btn-success"><i class='bx bx-book-open'></i> Paid</button>
+                    @else
+                        <form action="{{ route('payments.handle', ['lessonId' => $lesson->id]) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="amount" value="{{ $lesson->price }}">
+                            <button type="submit" class="btn btn-success"><i class='bx bxs-lock-alt'></i> Pay</button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    EduTech Explorer
+                </div>
+
+                <div class="footer-social">
+                    <a href="#" target="_blank" rel="noopener noreferrer"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer"><i class="bx bxl-twitter"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer"><i class="bx bxl-linkedin"></i></a>
+                    <!-- Add other social icons as needed -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function searchLessons() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const lessons = document.querySelectorAll('.card');
+
+            lessons.forEach(lesson => {
+                const title = lesson.querySelector('.card-title').innerText.toLowerCase();
+                const instructor = lesson.querySelector('.card-instructor').innerText.toLowerCase();
+
+                if (title.includes(searchInput) || instructor.includes(searchInput)) {
+                    lesson.style.display = 'block';
+                } else {
+                    lesson.style.display = 'none';
+                }
+            });
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            searchLessons();
+        }
+    </script>
+    
+@endsection
