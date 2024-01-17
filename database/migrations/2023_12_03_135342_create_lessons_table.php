@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('instructor');
-            $table->decimal('price', 8, 2);
-            $table->string('image_path')->nullable();
+            $table->text('image_url')->nullable(); 
             $table->text('documents')->nullable();
-            $table->string('videos')->nullable();
+            $table->text('video_url')->nullable(); 
             $table->text('description')->nullable();
             $table->timestamps();
         });

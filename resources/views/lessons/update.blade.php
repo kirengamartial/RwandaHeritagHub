@@ -1,4 +1,5 @@
-<!-- resources/views/lessons/create.blade.php -->
+<!-- resources/views/lessons/edit.blade.php -->
+
 @extends('layouts.app')
 <style>
         .lesson-edit-container {
@@ -40,19 +41,21 @@
     </style>
 @section('content')
     <div class="lesson-edit-container">
-        <h1>Create a New Lesson</h1>
+        <h1>Edit Lesson</h1>
 
-        <form action="{{ route('lessons.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('lessons.update', ['id' => $lesson->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
 
+            <!-- Fields to edit -->
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="title" value="{{ old('title', $lesson->title) }}">
             </div>
 
             <div class="form-group">
                 <label for="image_url">Image URL:</label>
-                <input type="text" id="image_url" name="image_url">
+                <input type="url" id="image_url" name="image_url" value="{{ old('image_url', $lesson->image_url) }}">
             </div>
 
             <div class="form-group">
@@ -62,20 +65,17 @@
 
             <div class="form-group">
                 <label for="video_url">Video URL:</label>
-                <input type="text" id="video_url" name="video_url">
+                <input type="url" id="video_url" name="video_url" value="{{ old('video_url', $lesson->video_url) }}">
             </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description"></textarea>
+                <textarea id="description" name="description">{{ old('description', $lesson->description) }}</textarea>
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create Lesson</button>
-            </div>
+            <button type="submit" class="btn">Update Lesson</button>
         </form>
     </div>
 
-  
-
+   
 @endsection

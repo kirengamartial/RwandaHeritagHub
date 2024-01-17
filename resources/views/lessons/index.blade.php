@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 <style>
     .container1 {
         display: grid;
@@ -15,10 +16,15 @@
         overflow: hidden;
         text-decoration: none;
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: column; /* Stack children vertically */
     }
+
     .card1 {
         text-decoration: none;
-        color: #212529
+        color: #212529;
+        display: flex;
+        flex-direction: column; /* Stack children vertically */
     }
 
     .card img {
@@ -27,29 +33,33 @@
     }
 
     .card-body {
-        padding-top: 20px;
-        margin-left: 40px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column; /* Stack children vertically */
+        align-items: center; /* Center items horizontally */
+        text-align: center; /* Center text */
     }
 
     .card-title {
         font-size: 1.0rem;
-    }
-
-    .card-text {
         margin-bottom: 10px;
     }
 
     .btn {
-        margin-left: 20px;
+        margin-top: auto; /* Push the button to the bottom of the card-body */
     }
 
-    .btn-primary {
-        background-color: #007bff;
+    .btn-success {
+        background-color: #28a745;
         color: #fff;
         border: none;
         padding: 8px 16px;
         border-radius: 4px;
         cursor: pointer;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
     }
 
     #searchInput {
@@ -58,7 +68,7 @@
         border: 1px solid #ddd;
         margin-left: 500px;
         margin-top: 20px;
-        height:40px;
+        height: 40px;
         margin-bottom: 20px;
         border-radius: 4px;
     }
@@ -76,6 +86,10 @@
     #clearButton:hover {
         background-color: #0056b3;
     }
+
+    footer {
+        /* Your existing styles for the footer */
+    }
 </style>
 
 @section('content')
@@ -85,35 +99,13 @@
     <div class="container1">
         @foreach($lessons as $lesson)
             <div class="card" data-title="{{ strtolower($lesson->title) }}" data-instructor="{{ strtolower($lesson->instructor) }}">
-                @php
-                    $paidForLesson = $Payments->firstWhere('lesson_id', $lesson->id);
-                @endphp
-
-                @if($paidForLesson && $paidForLesson->payment_status === 'approved')
-                    <!-- Show the content with the link when the payment is made -->
-                    <a href="{{ route('lessons.show', ['id' => $lesson->id]) }}" class="card1">
-                        <img src="{{ asset('storage/' . $lesson->image_path) }}" alt="{{ $lesson->title }}">
-                        <div class="card-body">
-                            <h1 class="card-title">{{ $lesson->title }}</h1>
-                            <p class="card-text">Instructor: {{ $lesson->instructor }}</p>
-                            <p class="card-text">Price: ${{ $lesson->price }}</p>
-                            <button class="btn btn-success"><i class='bx bx-book-open'></i> Paid</button>
-                        </div>
-                    </a>
-                @else
-                    <!-- Show the form when the payment is not made -->
-                    <form action="{{ route('payments.handle', ['lessonId' => $lesson->id]) }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="amount" value="{{ $lesson->price }}">
-                        <img src="{{ asset('storage/' . $lesson->image_path) }}" alt="{{ $lesson->title }}">
-                        <div class="card-body">
-                            <h1 class="card-title">{{ $lesson->title }}</h1>
-                            <p class="card-text">Instructor: {{ $lesson->instructor }}</p>
-                            <p class="card-text">Price: ${{ $lesson->price }}</p>
-                            <button type="submit" class="btn btn-success"><i class='bx bxs-lock-alt'></i> Pay</button>
-                        </div>
-                    </form>
-                @endif
+                <a href="{{ route('lessons.show', ['id' => $lesson->id]) }}" class="card1">
+                    <img src="{{ $lesson->image_url }}" alt="{{ $lesson->title }}">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ $lesson->title }}</h1>
+                        <button class="btn btn-success"><i class='bx bx-book-open'></i> View Details</button>
+                    </div>
+                </a>
             </div>
         @endforeach
     </div>
@@ -122,7 +114,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    EduTech Explorer
+                    Rwanda Heritage Hub
                 </div>
                 <div class="footer-social">
                     <a href="#" target="_blank" rel="noopener noreferrer"><i class="bx bxl-facebook"></i></a>
@@ -144,7 +136,7 @@
                 const instructor = lesson.getAttribute('data-instructor');
 
                 if (title.includes(searchInput) || instructor.includes(searchInput)) {
-                    lesson.style.display = 'block';
+                    lesson.style.display = 'flex';
                 } else {
                     lesson.style.display = 'none';
                 }

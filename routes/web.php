@@ -25,11 +25,12 @@ Route::get('/', function () {
 
 Route::get('/lessons/create', [LessonController::class, 'create'])->middleware('auth')->name('lessons.create');
 Route::post('/lessons/store', [LessonController::class, 'store'])->middleware('auth')->name('lessons.store');
+Route::get('/lessons/lesson', [LessonController::class, 'showLesson'])->middleware('auth')->name('lessons.lesson');
+Route::get('/lessons/{id}/edit', [LessonController::class, 'edit'])->middleware('auth')->name('lessons.edit');
+Route::delete('/lessons/{id}', [LessonController::class, 'destroy'])->middleware('auth')->name('lessons.destroy');
+Route::put('/lessons/{id}', [LessonController::class, 'update'])->middleware('auth')->name('lessons.update');
 Route::get('/lessons/{id}', [LessonController::class, 'show'])->middleware('auth')->name('lessons.show');
-Route::post('/payments/make/{lessonId}', [PaymentController::class, 'pay'])->middleware('auth')->name('payments.handle');
-Route::get('/success', [PaymentController::class, 'success'])->middleware('auth');
-Route::get('/error', [PaymentController::class, 'error'])->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', [PaymentController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/home', [LessonController::class, 'index'])->name('home');

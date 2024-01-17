@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="hero" style="background-image:linear-gradient(rgba(0, 0, 0, 0.699),rgba(0, 0, 0, 0.699)),url('img/king.jpg');">
+<div id="hero" style="background-image:linear-gradient(rgba(0, 0, 0, 0.699),rgba(0, 0, 0, 0.699)),url('http://www.visitrwanda.com/wp-content/uploads/fly-images/3132/Visit-Rwanda-NH_OO_Landscape_Kings_Palace_0470_MASTER-1920x1280.jpg');">
     <div class="container1">
-        <h2>Welcome to EduTech Explorer</h2>
-        <p>Explore a world of knowledge with our innovative educational technology.</p>
+        <h2>Welcome to Rwanda Heritage Hub</h2>
+        <p>Explore the Rich Cultural Heritage of Rwanda</p>
         <a href="{{url('/home')}}" class="btn">Learn More</a>
     </div>
 </div>
@@ -15,12 +15,13 @@
         <div class="separate">
         <div class="project-overview">
             <h3>Project Overview</h3>
-            <p>"EduTech Explorer" is an online platform designed to connect students, educators, and lifelong learners with a wide variety of educational resources, including courses, tutorials, and learning materials...</p>
+            <p>The Rwanda Heritage Hub Interactive Virtual Museum is a comprehensive web application designed to offer users an immersive experience into Rwandan history, traditions, and cultural artifacts. The platform aims to provide a rich, educational, and interactive journey through the country's heritage.</p>
         </div>
         <div class="features">
             <h3>Features</h3>
             <ul>
-                <li>User Registration and Login: Users can create accounts and log in to access additional features like saving favorite courses and tracking their progress.</li>
+                <li>Utilize 3D modeling to recreate Rwandan artifacts, historical sites, and cultural items.</li>
+                <li>Each exhibit will offer detailed and curated information about the significance of the items, providing users with a comprehensive understanding.</li>
                 <!-- Add other features here -->
             </ul>
         </div>
@@ -33,7 +34,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-logo">
-                EduTech Explorer
+                Rwanda Heritage Hub
             </div>
            
             <div class="footer-social">

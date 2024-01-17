@@ -4,64 +4,94 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lesson;
-use Omnipay\Omnipay;
 
 class LessonController extends Controller
 {
-    private $gateway;
-
-    public function __construct()
-    {
-        $this->gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-        $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
-        $this->gateway->setTestMode(true);
-    }
-
     public function create()
     {
         return view('lessons.create');
     }
 
+    public function edit($id)
+    {
+        $lesson = Lesson::findOrFail($id);
+        return view('lessons.update', compact('lesson'));
+    }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'title' => 'nullable|string',
+        'image_url' => 'nullable|url',
+        'documents' => 'nullable|file',
+        'video_url' => 'nullable|url',
+        'description' => 'nullable|string',
+    ]);
+
+    $lesson = Lesson::findOrFail($id);
+
+    // Update only the provided fields
+    $lesson->fill($request->only([
+        'title','image_url', 'video_url', 'description',
+    ]));
+
+    // Update documents if provided
+    if ($request->hasFile('documents')) {
+        $lesson->documents = $request->file('documents')->store('lesson_documents', 'public');
+    }
+
+    $lesson->save();
+
+    return redirect()->route('lessons.show', ['id' => $lesson->id]);
+}
+
+    
+
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
-            'instructor' => 'required',
-            'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_url' => 'nullable|url',
             'documents' => 'nullable|file',
-            'videos' => 'nullable|mimes:mp4,mov,ogx,oga,ogv,ogg,qt',
+            'video_url' => 'nullable|url',
             'description' => 'nullable|string',
         ]);
-    
-        // Handle image upload
-        $imagePath = $request->hasFile('image') ? $request->file('image')->store('lesson_images', 'public') : null;
-    
-        // Handle document upload
-        $documentPath = $request->hasFile('documents') ? $request->file('documents')->store('lesson_documents', 'public') : null;
-    
-        // Handle video upload
-        $videoPath = $request->hasFile('videos') ? $request->file('videos')->store('lesson_videos', 'public') : null;
-    
-        // Create lesson
+
         $lesson = new Lesson([
             'title' => $request->input('title'),
-            'instructor' => $request->input('instructor'),
-            'price' => $request->input('price'),
-            'image_path' => $imagePath,
-            'documents' => $documentPath,
-            'videos' => $videoPath,
+            'image_url' => $request->input('image_url'), 
+            'documents' => $request->hasFile('documents') ? $request->file('documents')->store('lesson_documents', 'public') : null,
+            'video_url' => $request->input('video_url'),
             'description' => $request->input('description'),
         ]);
-    
+        
         $lesson->save();
-    
+
         return redirect()->route('home');
     }
-    
 
-   
+    public function index()
+    {
+
+        $lessons = Lesson::all();
+
+        return view('lessons.index', compact('lessons'));
+    }
+
+    public function showLesson()
+    {
+
+        $lessons = Lesson::all();
+
+        return view('lessons.lesson', compact('lessons'));
+    }
+    
+    public function destroy($id)
+{
+    $lesson = Lesson::findOrFail($id);
+    $lesson->delete();
+
+    return redirect()->route('home')->with('success', 'Lesson deleted successfully.');
+}
 
 
     public function show($id)

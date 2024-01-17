@@ -1,20 +1,20 @@
-<!-- resources/views/lessons/show.blade.php -->
 @extends('layouts.app')
+
 <style>
     body {
         font-family: 'Arial', sans-serif;
-        /* display: flex; */
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        display: flex;
+        flex-direction: column; /* Make body a flex container */
+        min-height: 100vh; /* Ensure body takes at least the full viewport height */
         margin: 0;
     }
 
     .lesson-details-container {
         display: flex;
+        flex: 1; /* Allow .lesson-details-container to grow and take remaining space */
         max-width: 1280px;
-        width: 1280px;
-        height: 475px;
+        width: 100%;
+        min-height: 388px; /* Make .lesson-details-container at least the full viewport height */
         padding-right: 60px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow: hidden;
@@ -27,6 +27,33 @@
         min-width: 150px;
         text-align: center;
         margin-right: 50px;
+        overflow-y: auto;
+        min-height: 100%; /* Allow .left-side to take full height */
+    }
+
+    .watch-button {
+        display: inline-block;
+        margin-top: 10px;
+        background-color: #4285f4;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .watch-button:hover {
+        background-color: #3367d6;
+    }
+
+    .watch-button button {
+        background: none;
+        border: none;
+        color: inherit;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
     }
 
     .menu-item {
@@ -64,7 +91,6 @@
         margin-bottom: 10px;
     }
 
-    /* Additional styles for documents and reviews */
     h2 {
         color: #333;
         margin-bottom: 10px;
@@ -83,8 +109,33 @@
     a.download-link:hover {
         background-color: #3367d6;
     }
-    
+
+    /* Footer styles */
+    footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .footer-logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .footer-social a {
+        color: #fff;
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
 </style>
+
 @section('content')
 
 <div class="lesson-details-container">
@@ -96,16 +147,13 @@
     </div>
 
     <div class="right-side">
-       
-    <h1>{{ $lesson->title }}</h1>
-        <p>Instructor: {{ $lesson->instructor }}</p>
+        <h1>{{ $lesson->title }}</h1>
+
         <div id="course-content" class="content">
-            
             <!-- Video content goes here -->
-            <video width="600" height="300" controls>
-                <source src="{{ asset('storage/' . $lesson->videos) }}" type="video/mp4">
-               
-            </video>
+            <a class="watch-button" href="https://www.youtube.com/watch?v=eB6txyhHFG4" target="_blank">
+                <button > Watch {{ $lesson->title}} on YouTube</button>
+            </a>
         </div>
 
         <div id="about-content" class="content" style="display: none;">
@@ -126,15 +174,17 @@
         <div id="reviews-content" class="content" style="display: none;">
             <!-- Display reviews -->
             <h2>Reviews</h2>
-             <p>reviews</p>
+            <p>reviews</p>
         </div>
     </div>
 </div>
+
+<!-- Footer section -->
 <footer>
     <div class="container">
         <div class="footer-content">
             <div class="footer-logo">
-                EduTech Explorer
+                Rwanda Heritage Hub
             </div>
            
             <div class="footer-social">
@@ -146,7 +196,13 @@
         </div>
     </div>
 </footer>
+
 <script>
+    // Simulate click on "course" when the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        showContent('course');
+    });
+
     function showContent(contentType) {
         // Hide all content divs
         document.querySelectorAll('.content').forEach(function (element) {

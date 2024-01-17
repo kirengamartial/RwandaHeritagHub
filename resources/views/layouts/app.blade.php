@@ -307,7 +307,7 @@ footer {
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                   EduTech Explorer
+                   Rwanda Heritage Hub
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -346,8 +346,8 @@ footer {
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     @if(Auth::user()->isTeacher)
                         <!-- If user is a teacher, show the link -->
-                        <a class="dropdown-item dashboard-link" href="/lessons/create">
-                            Add Lesson
+                        <a class="dropdown-item dashboard-link" href="/lessons/lesson">
+                            Lesson
                         </a>
                     @endif
 
