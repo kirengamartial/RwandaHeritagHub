@@ -1,2 +1,2 @@
-# Edut_ech
-Rwanda Heritage Hub" is an online platform designed to connect students, educators, and lifelong learners with a wide variety of educational resources, including courses, tutorials, and learning materials. This project addresses the challenge of accessing quality educational content efficiently. I
+# Rwanda Heritage Hub
+The Rwanda Heritage Hub is an immersive digital platform that celebrates and preserves the rich cultural heritage of Rwanda. Through cutting-edge technologies, it offers a curated exploration of diverse exhibits, providing detailed insights and multimedia experiences. This project invites users to embark on a captivating journey, fostering cultural understanding and appreciation.
