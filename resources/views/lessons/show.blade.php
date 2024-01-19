@@ -140,7 +140,7 @@
 
 <div class="lesson-details-container">
     <div class="left-side">
-        <div class="menu-item" id="course" onclick="showContent('course')">Course</div>
+        <div class="menu-item" id="course" onclick="showContent('course')">Exhibit</div>
         <div class="menu-item" id="about" onclick="showContent('about')">About</div>
         <div class="menu-item" id="content" onclick="showContent('content')">Content</div>
         <div class="menu-item" id="reviews" onclick="showContent('reviews')">Reviews</div>

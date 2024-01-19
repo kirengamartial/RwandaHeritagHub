@@ -5,7 +5,7 @@
     <div class="container1">
         <h2>Welcome to Rwanda Heritage Hub</h2>
         <p>Explore the Rich Cultural Heritage of Rwanda</p>
-        <a href="{{url('/home')}}" class="btn">Learn More</a>
+        <a href="{{url('/home')}}" class="btn">Explore</a>
     </div>
 </div>
 

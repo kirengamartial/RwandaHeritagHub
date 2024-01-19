@@ -321,7 +321,7 @@ footer {
    
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-            <a class="nav-link" href="/home">Courses</a>
+            <a class="nav-link" href="/home">Exhibits</a>
         </li>
     </ul>
         <!-- Authentication Links -->
